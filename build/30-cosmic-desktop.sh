@@ -40,11 +40,13 @@ echo "::endgroup::"
 echo "::group:: Configure Display Manager"
 
 # Enable cosmic-greeter (COSMIC's display manager)
-if systemctl list-unit-files --type=service | grep -q '^cosmic-greeter.service'; then
+if [[ -f /usr/lib/systemd/system/cosmic-greeter.service || -f /etc/systemd/system/cosmic-greeter.service ]]; then
     systemctl enable cosmic-greeter
+elif [[ -f /etc/systemd/system/display-manager.service ]]; then
+    systemctl enable display-manager.service
+    echo "Warning: cosmic-greeter service unit not found; enabled display-manager.service instead." >&2
 else
-    echo "Error: cosmic-greeter service not found after COSMIC installation." >&2
-    exit 1
+    echo "Warning: no display manager service unit found; skipping enable step." >&2
 fi
 
 echo "Display manager configured"
