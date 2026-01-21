@@ -26,23 +26,43 @@ Base image: ghcr.io/ublue-os/base-main:latest
 Build locally:
 
 1. Run the build:
+
+   ```bash
    sudo just build
+   ```
 
 Create a VM image:
 
 1. Build a QCOW2:
+
+   ```bash
    sudo just build-qcow2
+   ```
 
 Switch your system to this image:
 
 1. Rebase:
+
+   ```bash
    sudo bootc switch ghcr.io/ericrocha97/bluefin-cosmic-dx:stable
+   ```
+
 2. Reboot:
+
+   ```bash
    sudo systemctl reboot
+   ```
 
 Roll back to Bluefin DX:
 
 1. Rebase back:
+
+   ```bash
    sudo bootc switch ghcr.io/ublue-os/bluefin-dx:stable
+   ```
+
 2. Reboot:
+
+   ```bash
    sudo systemctl reboot
+   ```

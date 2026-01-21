@@ -11,7 +11,10 @@ set -eoux pipefail
 
 # Source helper functions
 # shellcheck source=/dev/null
-source /ctx/build/copr-helpers.sh
+if ! source /ctx/build/copr-helpers.sh; then
+    echo "Error: Failed to source /ctx/build/copr-helpers.sh; cannot proceed with COPR installation." >&2
+    exit 1
+fi
 
 echo "::group:: Install COSMIC Desktop"
 
@@ -37,7 +40,12 @@ echo "::endgroup::"
 echo "::group:: Configure Display Manager"
 
 # Enable cosmic-greeter (COSMIC's display manager)
-systemctl enable cosmic-greeter
+if systemctl list-unit-files --type=service | grep -q '^cosmic-greeter.service'; then
+    systemctl enable cosmic-greeter
+else
+    echo "Error: cosmic-greeter service not found after COSMIC installation." >&2
+    exit 1
+fi
 
 echo "Display manager configured"
 echo "::endgroup::"
