@@ -12,6 +12,10 @@ set -eoux pipefail
 
 # Source helper functions (includes logging utilities)
 # shellcheck source=/dev/null
+if [[ ! -f /ctx/build/copr-helpers.sh ]]; then
+    echo "copr-helpers.sh not found in /ctx/build" >&2
+    exit 1
+fi
 source /ctx/build/copr-helpers.sh
 
 log_section "Installing COSMIC Desktop"

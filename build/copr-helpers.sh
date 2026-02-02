@@ -54,7 +54,7 @@ verify_packages() {
             failed=$((failed + 1))
         fi
     done
-    return $failed
+    return $((failed > 0 ? 1 : 0))
 }
 
 ###############################################################################
@@ -74,7 +74,7 @@ copr_install_isolated() {
         return 1
     fi
 
-    repo_id="copr:copr.fedorainfracloud.org:${copr_name//\//:}"
+    local repo_id="copr:copr.fedorainfracloud.org:${copr_name//\//:}"
 
     log_step "Installing ${#packages[@]} packages from COPR $copr_name (isolated mode)"
     log_info "Packages: ${packages[*]}"

@@ -17,7 +17,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 ### Added Applications (Runtime)
 
 - **CLI Tools (Homebrew)**: None (no Homebrew additions yet).
-- **GUI Apps (Flatpak)**: None (no Flatpak additions yet).
+- **GUI Apps (Flatpak)**: Zen Browser.
 
 ### Removed/Disabled
 

@@ -28,9 +28,7 @@ log_step "Copying Bluefin configuration from @projectbluefin/common..."
 
 # Copy just files from @projectbluefin/common (includes 00-entry.just which imports 60-custom.just)
 mkdir -p /usr/share/ublue-os/just/
-shopt -s nullglob
 cp -r /ctx/oci/common/bluefin/usr/share/ublue-os/just/* /usr/share/ublue-os/just/
-shopt -u nullglob
 
 log_success "Bluefin just files copied to /usr/share/ublue-os/just/"
 echo "::endgroup::"
