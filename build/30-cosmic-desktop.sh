@@ -11,12 +11,15 @@ set -eoux pipefail
 ###############################################################################
 
 # Source helper functions (includes logging utilities)
-# shellcheck source=/dev/null
-if [[ ! -f /ctx/build/copr-helpers.sh ]]; then
-    echo "copr-helpers.sh not found in /ctx/build" >&2
+# shellcheck source=build/copr-helpers.sh
+if [[ -f /ctx/build/copr-helpers.sh ]]; then
+    source /ctx/build/copr-helpers.sh
+elif [[ -f "$(dirname "$0")/copr-helpers.sh" ]]; then
+    source "$(dirname "$0")/copr-helpers.sh"
+else
+    echo "copr-helpers.sh not found in /ctx/build or script directory" >&2
     exit 1
 fi
-source /ctx/build/copr-helpers.sh
 
 log_section "Installing COSMIC Desktop"
 log_info "COSMIC will be installed alongside GNOME (dual desktop setup)"
