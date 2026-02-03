@@ -42,6 +42,15 @@ COSMIC_PACKAGES=(
     cosmic-files
     cosmic-edit
     cosmic-term
+    cosmic-store
+    cosmic-player
+    cosmic-screenshot
+    cosmic-bg
+    cosmic-wallpapers
+    cosmic-icons
+    cosmic-notifications
+    cosmic-osd
+    cosmic-app-library
     cosmic-workspaces
     xdg-desktop-portal-cosmic
 )
