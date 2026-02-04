@@ -31,9 +31,13 @@ jobs:
     runs-on: ubuntu-24.04
 
     permissions:
-      contents: write
       packages: write
       id-token: write
+
+    outputs:
+      short_date: ${{ steps.date.outputs.short_date }}
+      image_registry: ${{ env.IMAGE_REGISTRY }}
+      image_name: ${{ env.IMAGE_NAME }}
 
     steps:
       - name: Prepare environment
@@ -218,18 +222,27 @@ jobs:
       #       --key env://COSIGN_PRIVATE_KEY \
       #       "${IMAGE}@${DIGEST}"
 
+  create_release:
+    name: Create GitHub Release
+    runs-on: ubuntu-24.04
+    needs: build_push
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+
+    permissions:
+      contents: write
+
+    steps:
       - name: Create Release
         uses: softprops/action-gh-release@v2
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         with:
-          tag_name: v${{ steps.date.outputs.short_date }}
-          name: v${{ steps.date.outputs.short_date }}
+          tag_name: v${{ needs.build_push.outputs.short_date }}
+          name: v${{ needs.build_push.outputs.short_date }}
           body: |
             ## 📦 Container Image
 
-            `${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.date.outputs.short_date }}`
+            `${{ needs.build_push.outputs.image_registry }}/${{ needs.build_push.outputs.image_name }}:${{ needs.build_push.outputs.short_date }}`
 
-            [View on GitHub Container Registry](https://github.com/${{ github.repository }}/pkgs/container/${{ env.IMAGE_NAME }})
+            [View on GitHub Container Registry](https://github.com/${{ github.repository }}/pkgs/container/${{ needs.build_push.outputs.image_name }})
           draft: false
           prerelease: false
           make_latest: true
