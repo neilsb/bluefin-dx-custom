@@ -63,8 +63,8 @@ log_step "Installing additional system packages..."
 
 # COPR CLI tools for managing COPR repositories
 log_info "Installing COPR CLI tools..."
-dnf5 install -y dnf-plugins-copr
-verify_package "dnf-plugins-copr"
+dnf5 install -y copr-cli
+verify_package "copr-cli"
 log_success "COPR CLI tools installed"
 
 echo "::endgroup::"

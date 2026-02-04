@@ -17,7 +17,7 @@ Aqui estão as mudanças em relação ao Bluefin DX. Esta imagem é baseada no B
   - Aplicações nativas: Settings, Files (gerenciador de arquivos), Edit (editor de texto), Terminal, Store (loja de apps), Player (reprodutor de mídia), Screenshot (ferramenta de captura de tela)
   - Componentes do sistema: wallpapers, ícones, notificações, OSD, biblioteca de apps, gerenciador de workspaces
   - Integração com desktop portal (xdg-desktop-portal-cosmic)
-- **Ferramentas CLI**: dnf-plugins-copr (gerenciamento e monitoramento de repositórios COPR)
+- **Ferramentas CLI**: copr-cli (gerenciamento e monitoramento de repositórios COPR)
 
 ### Aplicações adicionadas (runtime)
 
