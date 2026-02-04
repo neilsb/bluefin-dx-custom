@@ -47,7 +47,7 @@ COSMIC_PACKAGES=(
     cosmic-screenshot
     cosmic-bg
     cosmic-wallpapers
-    cosmic-icons
+    cosmic-icon-theme
     cosmic-notifications
     cosmic-osd
     cosmic-app-library
