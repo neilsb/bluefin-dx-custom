@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     permissions:
-      contents: read
+      contents: write
       packages: write
       id-token: write
 
@@ -71,6 +71,7 @@ jobs:
           # https://artifacthub.io/docs/topics/repositories/container-images/
           # https://linux.die.net/man/1/date
           echo "date=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" >> $GITHUB_OUTPUT
+          echo "short_date=$(date -u +%Y%m%d)" >> $GITHUB_OUTPUT
 
       # Image metadata for https://artifacthub.io/ - This is optional but is highly recommended so we all can get a index of all the custom images
       # The metadata by itself is not going to do anything, you choose if you want your image to be on ArtifactHub or not.
@@ -216,3 +217,19 @@ jobs:
       #       --type spdxjson \
       #       --key env://COSIGN_PRIVATE_KEY \
       #       "${IMAGE}@${DIGEST}"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        with:
+          tag_name: v${{ steps.date.outputs.short_date }}
+          name: v${{ steps.date.outputs.short_date }}
+          body: |
+            ## 📦 Container Image
+
+            `${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.date.outputs.short_date }}`
+
+            [View on GitHub Container Registry](https://github.com/${{ github.repository }}/pkgs/container/${{ env.IMAGE_NAME }})
+          draft: false
+          prerelease: false
+          make_latest: true
