@@ -58,6 +58,17 @@ log_success "Copied $preinstall_count Flatpak preinstall file(s)"
 
 echo "::endgroup::"
 
+echo "::group:: Install System Packages"
+log_step "Installing additional system packages..."
+
+# COPR CLI tools for managing COPR repositories
+log_info "Installing COPR CLI tools..."
+dnf5 install -y copr-cli
+verify_package "copr-cli"
+log_success "COPR CLI tools installed"
+
+echo "::endgroup::"
+
 echo "::group:: System Configuration"
 log_step "Configuring system services..."
 

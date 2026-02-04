@@ -37,7 +37,10 @@ log_section() { echo -e "\n${BOLD}━━━ $* ━━━${NC}"; }
 verify_package() {
     local pkg="$1"
     if rpm -q "$pkg" &>/dev/null; then
-        log_success "$pkg installed: $(rpm -q "$pkg")"
+        # Use query format to get full package info with arch (handles multilib installs)
+        local pkg_info
+        pkg_info=$(rpm -q --qf "%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n" "$pkg")
+        log_success "Installed: $pkg_info"
         return 0
     else
         log_error "$pkg installation verification failed!"
@@ -64,6 +67,10 @@ verify_packages() {
 # Install packages from a COPR repository in isolated mode
 # The repo is enabled only for the installation and then disabled
 # Usage: copr_install_isolated "owner/repo" package1 package2 ...
+# 
+# Optional: Set COPR_VERIFY_PACKAGES=true to enable inline package verification
+# (by default, verification is skipped to avoid duplicate queries when callers
+# perform their own verification)
 copr_install_isolated() {
     local copr_name="$1"
     shift
@@ -89,4 +96,12 @@ copr_install_isolated() {
     dnf5 -y install --enablerepo="$repo_id" "${packages[@]}"
 
     log_success "Installed ${#packages[@]} packages from COPR $copr_name"
+
+    # Optional inline verification (disabled by default to avoid duplicate queries)
+    if [[ "${COPR_VERIFY_PACKAGES:-false}" == "true" ]]; then
+        log_info "Verifying installed package versions:"
+        for pkg in "${packages[@]}"; do
+            verify_package "$pkg" || log_warn "Could not verify version for $pkg (check if package name matches rpm name)"
+        done
+    fi
 }
