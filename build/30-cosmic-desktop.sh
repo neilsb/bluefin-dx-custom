@@ -71,27 +71,20 @@ echo "::endgroup::"
 echo "::group:: Verify COSMIC Installation"
 log_step "Verifying COSMIC package installation..."
 
-# Verify critical packages
-critical_packages=(
-    cosmic-session
-    cosmic-comp
-    cosmic-panel
-    cosmic-settings
-)
-
+# Verify all installed COSMIC packages
 verification_failed=0
-for pkg in "${critical_packages[@]}"; do
+for pkg in "${COSMIC_PACKAGES[@]}"; do
     if ! verify_package "$pkg"; then
         verification_failed=1
     fi
 done
 
 if [[ $verification_failed -eq 1 ]]; then
-    log_error "Some critical COSMIC packages failed verification!"
+    log_error "Some COSMIC packages failed verification!"
     exit 1
 fi
 
-log_success "All critical COSMIC packages verified"
+log_success "All COSMIC packages verified successfully"
 echo "::endgroup::"
 
 ###############################################################################

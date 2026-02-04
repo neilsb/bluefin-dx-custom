@@ -37,7 +37,10 @@ log_section() { echo -e "\n${BOLD}━━━ $* ━━━${NC}"; }
 verify_package() {
     local pkg="$1"
     if rpm -q "$pkg" &>/dev/null; then
-        log_success "$pkg installed: $(rpm -q "$pkg")"
+        # Use query format to get clean version-release string
+        local version
+        version=$(rpm -q --qf "%{VERSION}-%{RELEASE}" "$pkg")
+        log_success "$pkg installed: $version"
         return 0
     else
         log_error "$pkg installation verification failed!"
@@ -89,4 +92,12 @@ copr_install_isolated() {
     dnf5 -y install --enablerepo="$repo_id" "${packages[@]}"
 
     log_success "Installed ${#packages[@]} packages from COPR $copr_name"
+
+    # Verify and log versions of installed packages
+    log_info "Verifying installed package versions:"
+    for pkg in "${packages[@]}"; do
+        # We don't fail here to allow the caller to handle verification logic if desired,
+        # but we log the current state clearly.
+        verify_package "$pkg" || log_warn "Could not verify version for $pkg (check if package name matches rpm name)"
+    done
 }
