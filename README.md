@@ -17,6 +17,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
   - Native applications: Settings, Files (file manager), Edit (text editor), Terminal, Store (app store), Player (media player), Screenshot tool
   - System components: wallpapers, icons, notifications, OSD, app library, workspaces manager
   - Desktop portal integration (xdg-desktop-portal-cosmic)
+- **CLI Tools**: dnf-plugins-copr (COPR repository management and monitoring)
 
 ### Added Applications (Runtime)
 
