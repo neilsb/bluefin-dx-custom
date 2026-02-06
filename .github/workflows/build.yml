@@ -38,6 +38,12 @@ jobs:
       short_date: ${{ steps.date.outputs.short_date }}
       image_registry: ${{ env.IMAGE_REGISTRY }}
       image_name: ${{ env.IMAGE_NAME }}
+      fedora_version: ${{ steps.versions.outputs.fedora_version }}
+      kernel_version: ${{ steps.versions.outputs.kernel_version }}
+      vscode_version: ${{ steps.versions.outputs.vscode_version }}
+      warp_version: ${{ steps.versions.outputs.warp_version }}
+      cosmic_session_version: ${{ steps.versions.outputs.cosmic_session_version }}
+      changelog: ${{ steps.versions.outputs.changelog }}
 
     steps:
       - name: Prepare environment
@@ -129,6 +135,103 @@ jobs:
           for tag in ${{ steps.metadata.outputs.tags }}; do
             podman tag ${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }} ${{ env.IMAGE_NAME }}:$tag
           done
+
+      - name: Extract package versions
+        id: versions
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          IMAGE="${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
+          current_manifest="current-manifest.txt"
+          previous_manifest="previous-manifest.txt"
+
+          podman run --rm "$IMAGE" rpm -qa --qf '%{NAME}\t%{VERSION}-%{RELEASE}\n' | sort > "$current_manifest"
+
+          get_version_from_manifest() {
+            local file="$1"
+            local package="$2"
+            awk -v pkg="$package" '$1==pkg {print $2; exit}' "$file"
+          }
+
+          normalize_version() {
+            local version="$1"
+            if [[ -z "$version" ]]; then
+              printf '%s' "unknown"
+            else
+              printf '%s' "$version"
+            fi
+          }
+
+          fedora_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" fedora-release)")
+          kernel_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" kernel)")
+          vscode_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" code-insiders)")
+          warp_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" warp-terminal)")
+          cosmic_session_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" cosmic-session)")
+
+          latest_tag=$(gh release list --limit 1 --json tagName -q '.[0].tagName' 2>/dev/null || true)
+          if [[ -n "$latest_tag" ]]; then
+            temp_dir=$(mktemp -d)
+            gh release download "$latest_tag" --pattern "manifest.txt" --dir "$temp_dir" || true
+            if [[ -f "$temp_dir/manifest.txt" ]]; then
+              mv "$temp_dir/manifest.txt" "$previous_manifest"
+            fi
+            rm -rf "$temp_dir"
+          fi
+
+          changelog_lines=()
+          tracked_packages=(
+            code-insiders
+            warp-terminal
+            cosmic-session
+            cosmic-comp
+            cosmic-panel
+            cosmic-launcher
+            cosmic-settings
+            cosmic-files
+            cosmic-edit
+            cosmic-term
+            cosmic-store
+            cosmic-player
+            cosmic-screenshot
+            xdg-desktop-portal-cosmic
+          )
+
+          if [[ -f "$previous_manifest" ]]; then
+            for pkg in "${tracked_packages[@]}"; do
+              old_version=$(get_version_from_manifest "$previous_manifest" "$pkg")
+              new_version=$(get_version_from_manifest "$current_manifest" "$pkg")
+              if [[ -n "$old_version" && -n "$new_version" && "$old_version" != "$new_version" ]]; then
+                changelog_lines+=("- ${pkg}: ${old_version} -> ${new_version}")
+              fi
+            done
+          fi
+
+          if [[ ${#changelog_lines[@]} -eq 0 ]]; then
+            changelog_lines+=("- No tracked package version changes detected.")
+          fi
+
+          cp "$current_manifest" manifest.txt
+
+          echo "fedora_version=$fedora_version" >> "$GITHUB_OUTPUT"
+          echo "kernel_version=$kernel_version" >> "$GITHUB_OUTPUT"
+          echo "vscode_version=$vscode_version" >> "$GITHUB_OUTPUT"
+          echo "warp_version=$warp_version" >> "$GITHUB_OUTPUT"
+          echo "cosmic_session_version=$cosmic_session_version" >> "$GITHUB_OUTPUT"
+          {
+            echo "changelog<<EOF"
+            printf '%s\n' "${changelog_lines[@]}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload manifest artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: manifest
+          path: manifest.txt
 
       # SBOM (OPTIONAL): Software Bill of Materials generation using Syft
       # Creates a detailed inventory of all software components in the image for supply chain security.
@@ -232,17 +335,38 @@ jobs:
       contents: write
 
     steps:
+      - name: Download manifest artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: manifest
+          path: .
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.build_push.outputs.short_date }}
           name: v${{ needs.build_push.outputs.short_date }}
           body: |
-            ## 📦 Container Image
+            ## Container Image
 
             `${{ needs.build_push.outputs.image_registry }}/${{ needs.build_push.outputs.image_name }}:${{ needs.build_push.outputs.short_date }}`
 
+            ## Package Versions
+
+            | Component | Version |
+            | --- | --- |
+            | Fedora | ${{ needs.build_push.outputs.fedora_version }} |
+            | Kernel | ${{ needs.build_push.outputs.kernel_version }} |
+            | VSCode Insiders | ${{ needs.build_push.outputs.vscode_version }} |
+            | Warp Terminal | ${{ needs.build_push.outputs.warp_version }} |
+            | COSMIC Session | ${{ needs.build_push.outputs.cosmic_session_version }} |
+
+            ## Changes Since Previous Release
+
+            ${{ needs.build_push.outputs.changelog }}
+
             [View on GitHub Container Registry](https://github.com/${{ github.repository }}/pkgs/container/${{ needs.build_push.outputs.image_name }})
+          files: manifest.txt
           draft: false
           prerelease: false
           make_latest: true

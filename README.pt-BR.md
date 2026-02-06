@@ -1,5 +1,8 @@
 # bluefin-cosmic-dx
 
+[![Build](https://github.com/ericrocha97/bluefin/actions/workflows/build.yml/badge.svg)](https://github.com/ericrocha97/bluefin/actions/workflows/build.yml)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/bluefin-cosmic-dx)](https://artifacthub.io/packages/search?repo=bluefin-cosmic-dx)
+
 Este projeto foi criado usando o template finpilot: <https://github.com/projectbluefin/finpilot>.
 
 Versão em inglês: [README.md](README.md)
@@ -52,17 +55,59 @@ Imagem base: `ghcr.io/ublue-os/bluefin-dx:stable-daily`
 
 ## Uso básico
 
-Build local:
+### Comandos Just
+
+Este projeto usa [Just](https://just.systems/) como executor de comandos. Aqui estão os principais comandos disponíveis:
+
+**Build:**
 
 ```bash
-just build
+just build              # Constrói a imagem do container
+just build-vm           # Constrói imagem de VM (QCOW2) - alias para build-qcow2
+just build-qcow2        # Constrói imagem de VM QCOW2
+just build-iso          # Constrói imagem ISO instalador
+just build-raw          # Constrói imagem de disco RAW
 ```
 
-Criar imagem de VM:
+**Executar:**
 
 ```bash
-just build-qcow2
+just run-vm             # Executa a VM - alias para run-vm-qcow2
+just run-vm-qcow2       # Executa VM a partir da imagem QCOW2
+just run-vm-iso         # Executa VM a partir da imagem ISO
+just run-vm-raw         # Executa VM a partir da imagem RAW
 ```
+
+**Utilitários:**
+
+```bash
+just clean              # Limpa todos os arquivos temporários e artefatos de build
+just lint               # Executa shellcheck em todos os scripts bash
+just format             # Formata todos os scripts bash com shfmt
+just --list             # Mostra todos os comandos disponíveis
+```
+
+**Flag para exemplos customizados:**
+
+Por padrao, os Brewfiles e exemplos de ujust nao sao aplicados no build. Para habilitar, crie este arquivo antes de construir:
+
+```bash
+touch custom/.enable-custom
+```
+
+**Fluxo completo:**
+
+```bash
+# Construir tudo e executar a VM
+just build && just build-vm && just run-vm
+
+# Ou passo a passo:
+just build              # 1. Constrói imagem do container
+just build-qcow2        # 2. Constrói imagem de VM
+just run-vm-qcow2       # 3. Executa a VM
+```
+
+### Implantando no Seu Sistema
 
 Trocar seu sistema para esta imagem:
 
@@ -88,3 +133,46 @@ Na tela de login (GDM), clique no **ícone de engrenagem ⚙️** para seleciona
 
 - **GNOME** - Desktop padrão do Bluefin
 - **COSMIC** - Novo ambiente desktop da System76
+
+## Solucao de problemas
+
+### Sessao COSMIC nao aparece no GDM
+
+1. Verifique pacotes: `rpm -qa | grep -i cosmic`
+2. Verifique o arquivo de sessao: `ls /usr/share/wayland-sessions/cosmic.desktop`
+3. Reinicie o GDM: `sudo systemctl restart gdm`
+
+### VSCode ou Warp nao abre
+
+- Verifique RPM: `rpm -q code-insiders warp-terminal`
+- Confirme que /opt esta gravavel dentro da imagem (necessario para RPM)
+
+### Build local falha
+
+- Verifique espaco: `df -h`
+- Limpe e tente de novo: `just clean && just build`
+- Veja logs: `journalctl -xe`
+
+### VM nao inicia
+
+- Verifique KVM: `ls -l /dev/kvm`
+- Recrie a imagem: `just build-qcow2`
+
+## Screenshots
+
+<details>
+<summary>Ver screenshots</summary>
+
+### Seletor de sessao no GDM
+
+![Seletor de sessao no GDM](docs/images/gdm-selector.png)
+
+### Desktop COSMIC
+
+![Desktop COSMIC](docs/images/cosmic-desktop.png)
+
+### Desktop GNOME
+
+![Desktop GNOME](docs/images/gnome-desktop.png)
+
+</details>

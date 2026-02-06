@@ -1,0 +1,17 @@
+* text=auto
+
+*.sh text eol=lf
+*.just text eol=lf
+Justfile text eol=lf
+Containerfile text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.Brewfile text eol=lf
+*.preinstall text eol=lf
+
+*.qcow2 binary
+*.iso binary
+*.key binary

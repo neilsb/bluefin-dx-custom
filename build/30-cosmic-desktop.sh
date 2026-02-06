@@ -12,6 +12,7 @@ set -eoux pipefail
 
 # Source helper functions (includes logging utilities)
 # shellcheck source=build/copr-helpers.sh
+# shellcheck disable=SC1091
 if [[ -f /ctx/build/copr-helpers.sh ]]; then
     source /ctx/build/copr-helpers.sh
 elif [[ -f "$(dirname "$0")/copr-helpers.sh" ]]; then

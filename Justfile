@@ -245,18 +245,33 @@ _run-vm $target_image $tag $type $config:
     echo "Using Port: ${port}"
     echo "Connect to http://localhost:${port}"
 
+    volume_mount="${PWD}/${image_file}:/boot.${type}"
+    security_opts=()
+    if command -v getenforce &>/dev/null; then
+        selinux_status=$(getenforce)
+        if [[ "$selinux_status" == "Enforcing" ]]; then
+            file_owner=$(stat -c %u "${image_file}")
+            if [[ "$file_owner" -eq "$UID" ]]; then
+                volume_mount+=":Z"
+            else
+                security_opts+=(--security-opt label=disable)
+            fi
+        fi
+    fi
+
     # Set up the arguments for running the VM
     run_args=()
     run_args+=(--rm --privileged)
     run_args+=(--pull=newer)
     run_args+=(--publish "127.0.0.1:${port}:8006")
     run_args+=(--env "CPU_CORES=4")
-    run_args+=(--env "RAM_SIZE=8G")
+    run_args+=(--env "RAM_SIZE=6G")
     run_args+=(--env "DISK_SIZE=64G")
     run_args+=(--env "TPM=Y")
     run_args+=(--env "GPU=Y")
     run_args+=(--device=/dev/kvm)
-    run_args+=(--volume "${PWD}/${image_file}":"/boot.${type}")
+    run_args+=("${security_opts[@]}")
+    run_args+=(--volume "${volume_mount}")
     run_args+=(docker.io/qemux/qemu)
 
     # Run the VM and open the browser to connect

@@ -1,33 +1,34 @@
 # Build Scripts
 
-This directory contains build scripts that run during image creation. Scripts are executed in numerical order.
+This directory contains build scripts that run during image creation. Scripts are executed in numerical order by `10-build.sh`.
 
 ## How It Works
 
-Scripts are named with a number prefix (e.g., `10-build.sh`, `20-onepassword.sh`) and run in ascending order during the container build process.
+- The Containerfile runs only `10-build.sh`.
+- `10-build.sh` then runs any scripts that match `/ctx/build/[2-9][0-9]*-*.sh` in ascending order.
 
 ## Included Scripts
 
-- **`10-build.sh`** - Main build script for base system modifications and configuration (simplified for bluefin-dx base)
-- **`20-third-party-repos.sh`** - Installs VSCode Insiders and Warp Terminal from official repos
-- **`30-cosmic-desktop.sh`** - Installs COSMIC desktop from System76's COPR repository
-- **`copr-helpers.sh`** - Shareable helper functions for COPR management and logging
+- **`10-build.sh`** - Main build script. Copies Flatpak preinstall files, installs `copr-cli`, enables `podman.socket`, and runs the other numbered scripts.
+- **`20-third-party-repos.sh`** - Installs VSCode Insiders and Warp Terminal from official RPM repos.
+- **`30-cosmic-desktop.sh`** - Installs COSMIC desktop from System76's COPR repository.
+- **`99-versions.sh`** - Writes a version manifest to `/usr/share/bluefin-cosmic-dx/manifest.json`.
+- **`copr-helpers.sh`** - Helper functions for COPR management and logging.
 
-- **`20-onepassword.sh.example`** - Example showing how to install software from third-party RPM repositories (Google Chrome, 1Password)
+## Optional Custom Examples (Brewfiles and ujust)
 
-To use an example script:
+This repo keeps example Brewfiles and ujust files under `custom/`, but they are **not** applied by default. To enable them, create this flag file before building:
 
-1. Remove the `.example` extension
-2. Make it executable: `chmod +x build/20-yourscript.sh`
-3. The build system will automatically run it in numerical order
+```bash
+touch custom/.enable-custom
+```
 
 ## Creating Your Own Scripts
 
 Create numbered scripts for different purposes:
 
 ```bash
-# 10-build.sh - Base system (already exists)
-# 20-drivers.sh - Hardware drivers  
+# 20-drivers.sh - Hardware drivers
 # 30-development.sh - Development tools
 # 40-gaming.sh - Gaming software
 # 50-cleanup.sh - Final cleanup tasks
@@ -37,7 +38,7 @@ Create numbered scripts for different purposes:
 
 ```bash
 #!/usr/bin/env bash
-set -oue pipefail
+set -euo pipefail
 
 echo "Running custom setup..."
 # Your commands here
@@ -45,11 +46,10 @@ echo "Running custom setup..."
 
 ### Best Practices
 
-- **Use descriptive names**: `20-nvidia-drivers.sh` is better than `20-stuff.sh`
-- **One purpose per script**: Easier to debug and maintain
-- **Clean up after yourself**: Remove temporary files and disable temporary repos
-- **Test incrementally**: Add one script at a time and test builds
-- **Comment your code**: Future you will thank present you
+- Use descriptive names: `20-nvidia-drivers.sh` is better than `20-stuff.sh`
+- One purpose per script: easier to debug and maintain
+- Clean up after yourself: remove temporary files and disable temporary repos
+- Test incrementally: add one script at a time and test builds
 
 ### Disabling Scripts
 
@@ -60,17 +60,17 @@ To temporarily disable a script without deleting it:
 
 ## Execution Order
 
-The Containerfile runs scripts like this:
+The Containerfile runs:
 
 ```dockerfile
 RUN /ctx/build/10-build.sh
 ```
 
-The main script (`10-build.sh`) now runs additional numbered scripts automatically (20-, 30-, etc.) in ascending order. This keeps the Containerfile simple while preserving modular build steps.
+Then `10-build.sh` runs any `20-*.sh`, `30-*.sh`, etc. scripts in ascending order.
 
 ## Notes
 
 - Scripts run as root during build
 - Build context is available at `/ctx`
-- Use dnf5 for package management (not dnf or yum)
+- Use `dnf5` for package management (not `dnf` or `yum`)
 - Always use `-y` flag for non-interactive installs

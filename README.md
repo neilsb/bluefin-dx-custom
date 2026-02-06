@@ -1,5 +1,6 @@
 # bluefin-cosmic-dx
 
+[![Build](https://github.com/ericrocha97/bluefin/actions/workflows/build.yml/badge.svg)](https://github.com/ericrocha97/bluefin/actions/workflows/build.yml)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/bluefin-cosmic-dx)](https://artifacthub.io/packages/search?repo=bluefin-cosmic-dx)
 
 This project was created using the finpilot template: <https://github.com/projectbluefin/finpilot>.
@@ -54,17 +55,59 @@ Base image: `ghcr.io/ublue-os/bluefin-dx:stable-daily`
 
 ## Basic usage
 
-Build locally:
+### Just Commands
+
+This project uses [Just](https://just.systems/) as a command runner. Here are the main commands available:
+
+**Building:**
 
 ```bash
-just build
+just build              # Build the container image
+just build-vm           # Build VM image (QCOW2) - alias for build-qcow2
+just build-qcow2        # Build QCOW2 VM image
+just build-iso          # Build ISO installer image
+just build-raw          # Build RAW disk image
 ```
 
-Create a VM image:
+**Running:**
 
 ```bash
-just build-qcow2
+just run-vm             # Run the VM - alias for run-vm-qcow2
+just run-vm-qcow2       # Run VM from QCOW2 image
+just run-vm-iso         # Run VM from ISO image
+just run-vm-raw         # Run VM from RAW image
 ```
+
+**Utilities:**
+
+```bash
+just clean              # Clean all temporary files and build artifacts
+just lint               # Run shellcheck on all bash scripts
+just format             # Format all bash scripts with shfmt
+just --list             # Show all available commands
+```
+
+**Custom examples flag:**
+
+By default, Brewfiles and custom ujust examples are not applied during build. To enable them, create this file before building:
+
+```bash
+touch custom/.enable-custom
+```
+
+**Complete workflow:**
+
+```bash
+# Build everything and run the VM
+just build && just build-vm && just run-vm
+
+# Or step by step:
+just build              # 1. Build container image
+just build-qcow2        # 2. Build VM image
+just run-vm-qcow2       # 3. Run the VM
+```
+
+### Deploying to Your System
 
 Switch your system to this image:
 
@@ -90,3 +133,46 @@ At the GDM login screen, click the **⚙️ gear icon** to select:
 
 - **GNOME** - Default Bluefin desktop
 - **COSMIC** - System76's new desktop environment
+
+## Troubleshooting
+
+### COSMIC session does not appear in GDM
+
+1. Verify packages: `rpm -qa | grep -i cosmic`
+2. Check session file: `ls /usr/share/wayland-sessions/cosmic.desktop`
+3. Restart GDM: `sudo systemctl restart gdm`
+
+### VSCode or Warp fails to start
+
+- Verify RPM install: `rpm -q code-insiders warp-terminal`
+- Ensure /opt is writable inside the image (required for RPM installs)
+
+### Local build fails
+
+- Free disk space: `df -h`
+- Clean and retry: `just clean && just build`
+- Check logs: `journalctl -xe`
+
+### VM does not boot
+
+- Ensure KVM is available: `ls -l /dev/kvm`
+- Rebuild VM image: `just build-qcow2`
+
+## Screenshots
+
+<details>
+<summary>View screenshots</summary>
+
+### GDM session selector
+
+![GDM session selector](docs/images/gdm-selector.png)
+
+### COSMIC desktop
+
+![COSMIC desktop](docs/images/cosmic-desktop.png)
+
+### GNOME desktop
+
+![GNOME desktop](docs/images/gnome-desktop.png)
+
+</details>
