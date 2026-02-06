@@ -22,7 +22,7 @@ mkdir -p "${manifest_dir}"
 json_escape() {
     local value="$1"
     value=${value//\\/\\\\}
-  value=${value//\"/\\\"}
+    value=${value//\"/\\\"}
     value=${value//$'\n'/\\n}
     printf '%s' "$value"
 }
