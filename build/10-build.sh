@@ -36,18 +36,26 @@ echo "::endgroup::"
 echo "::group:: Copy Custom Files"
 log_step "Copying custom configuration files..."
 
-# Copy Brewfiles to standard location
-log_info "Copying Brewfiles..."
-mkdir -p /usr/share/ublue-os/homebrew/
-brewfile_count=$(find /ctx/custom/brew -name '*.Brewfile' | wc -l)
-cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
-log_success "Copied $brewfile_count Brewfile(s) to /usr/share/ublue-os/homebrew/"
+# Skip Brewfiles and ujust examples by default; enable later if needed.
+custom_enable_flag="/ctx/custom/.enable-custom"
+if [[ -f "$custom_enable_flag" ]]; then
+    log_info "Custom flag found: enabling Brewfiles and ujust examples"
 
-# Consolidate Just Files
-log_info "Consolidating custom just files..."
-just_count=$(find /ctx/custom/ujust -iname '*.just' | wc -l)
-find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
-log_success "Consolidated $just_count custom just file(s)"
+    # Copy Brewfiles to standard location
+    log_info "Copying Brewfiles..."
+    mkdir -p /usr/share/ublue-os/homebrew/
+    brewfile_count=$(find /ctx/custom/brew -name '*.Brewfile' | wc -l)
+    cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
+    log_success "Copied $brewfile_count Brewfile(s) to /usr/share/ublue-os/homebrew/"
+
+    # Consolidate Just Files
+    log_info "Consolidating custom just files..."
+    just_count=$(find /ctx/custom/ujust -iname '*.just' | wc -l)
+    find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
+    log_success "Consolidated $just_count custom just file(s)"
+else
+    log_info "Skipping Brewfiles and ujust examples (create custom/.enable-custom to enable)"
+fi
 
 # Copy Flatpak preinstall files
 log_info "Copying Flatpak preinstall files..."

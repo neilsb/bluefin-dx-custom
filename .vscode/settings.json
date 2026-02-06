@@ -1,0 +1,26 @@
+{
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "files.associations": {
+    "*.just": "makefile",
+    "Justfile": "makefile",
+    "Containerfile": "dockerfile",
+    "*.Brewfile": "ruby",
+    "*.preinstall": "ini"
+  },
+  "shellcheck.enable": true,
+  "[shellscript]": {
+    "editor.tabSize": 4
+  },
+  "[makefile]": {
+    "editor.tabSize": 4
+  },
+  "[yaml]": {
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.tabSize": 2
+  }
+}

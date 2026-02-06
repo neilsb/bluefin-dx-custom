@@ -1,6 +1,7 @@
 export image_name := env("IMAGE_NAME", "bluefin-cosmic-dx")
 export default_tag := env("DEFAULT_TAG", "stable")
 export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest@sha256:903c01d110b8533f8891f07c69c0ba2377f8d4bc7e963311082b7028c04d529d")
+export qemu_image := env("QEMU_IMAGE", "docker.io/qemux/qemu:9.2")
 
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
@@ -245,22 +246,33 @@ _run-vm $target_image $tag $type $config:
     echo "Using Port: ${port}"
     echo "Connect to http://localhost:${port}"
 
+    volume_mount="${PWD}/${image_file}:/boot.${type}"
+    security_opts=()
+    if command -v getenforce &>/dev/null; then
+        selinux_status=$(getenforce)
+        if [[ "$selinux_status" == "Enforcing" ]]; then
+            file_owner=$(stat -c %u "${image_file}")
+            if [[ "$file_owner" -eq "$UID" ]]; then
+                volume_mount+=":Z"
+            else
+                security_opts+=(--security-opt label=disable)
+            fi
+        fi
+    fi
+
     # Set up the arguments for running the VM
     run_args=()
     run_args+=(--rm --privileged)
-    run_args+=(--pull=newer)
     run_args+=(--publish "127.0.0.1:${port}:8006")
     run_args+=(--env "CPU_CORES=4")
-    run_args+=(--env "RAM_SIZE=8G")
+    run_args+=(--env "RAM_SIZE=6G")
     run_args+=(--env "DISK_SIZE=64G")
     run_args+=(--env "TPM=Y")
     run_args+=(--env "GPU=Y")
     run_args+=(--device=/dev/kvm)
-    run_args+=(--volume "${PWD}/${image_file}":"/boot.${type}")
-    run_args+=(docker.io/qemux/qemu)
-
-    # Run the VM and open the browser to connect
-    (sleep 30 && xdg-open http://localhost:"$port") &
+    run_args+=("${security_opts[@]+"${security_opts[@]}"}")
+    run_args+=(--volume "${volume_mount}")
+    run_args+=("${qemu_image}")
     podman run "${run_args[@]}"
 
 # Run a virtual machine from a QCOW2 image
