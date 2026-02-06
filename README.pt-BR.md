@@ -165,14 +165,14 @@ Na tela de login (GDM), clique no **ícone de engrenagem ⚙️** para seleciona
 
 ### Seletor de sessao no GDM
 
-![Seletor de sessao no GDM](docs/images/gdm-selector.png)
+![Seletor de sessao no GDM](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/gdm-selector.png)
 
 ### Desktop COSMIC
 
-![Desktop COSMIC](docs/images/cosmic-desktop.png)
+![Desktop COSMIC](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/cosmic-desktop.png)
 
 ### Desktop GNOME
 
-![Desktop GNOME](docs/images/gnome-desktop.png)
+![Desktop GNOME](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/gnome-desktop.png)
 
 </details>
