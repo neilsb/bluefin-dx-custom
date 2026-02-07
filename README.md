@@ -165,14 +165,14 @@ At the GDM login screen, click the **⚙️ gear icon** to select:
 
 ### GDM session selector
 
-![GDM session selector](docs/images/gdm-selector.png)
+![GDM session selector](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/gdm-selector.png)
 
 ### COSMIC desktop
 
-![COSMIC desktop](docs/images/cosmic-desktop.png)
+![COSMIC desktop](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/cosmic-desktop.png)
 
 ### GNOME desktop
 
-![GNOME desktop](docs/images/gnome-desktop.png)
+![GNOME desktop](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/gnome-desktop.png)
 
 </details>
