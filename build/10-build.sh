@@ -86,20 +86,25 @@ if [[ ! -f /etc/yum.repos.d/rpmfusion-free.repo ]]; then
 fi
 
 log_info "Installing RPM Fusion codec packages..."
+
+# The base image (negativo17/fedora-multimedia) ships vvenc-libs 1.14.x,
+# but libavcodec-freeworld from RPM Fusion requires vvenc-libs 1.13.x.
+# We need to downgrade vvenc-libs first so the dependency can be satisfied.
+if rpm -q vvenc-libs &>/dev/null; then
+    log_info "Downgrading vvenc-libs to RPM Fusion version (required by libavcodec-freeworld)..."
+    dnf5 downgrade -y --allowerasing --setopt=best=False vvenc-libs || \
+        log_info "vvenc-libs downgrade skipped (may already be correct version)"
+fi
+
 CODEC_PACKAGES=(
+    libavcodec-freeworld.x86_64
     gstreamer1-plugins-ugly
     libvdpau-va-gl
 )
-if rpm -q libavcodec &>/dev/null; then
-    log_info "Switching libavcodec to RPM Fusion freeworld..."
-    dnf5 swap -y --allowerasing --allow-downgrade --setopt=best=False --setopt=allow_vendor_change=1 \
-        libavcodec libavcodec-freeworld
-else
-    dnf5 install -y --allowerasing --allow-downgrade --setopt=best=False --setopt=allow_vendor_change=1 \
-        libavcodec-freeworld.x86_64
-fi
+
+log_info "Installing codec packages: ${CODEC_PACKAGES[*]}"
 dnf5 install -y --allowerasing --allow-downgrade --setopt=best=False --setopt=allow_vendor_change=1 "${CODEC_PACKAGES[@]}"
-verify_package "libavcodec-freeworld.x86_64"
+
 for pkg in "${CODEC_PACKAGES[@]}"; do
     verify_package "$pkg"
 done
