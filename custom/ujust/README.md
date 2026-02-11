@@ -18,15 +18,13 @@ Create `.just` files in this directory with your custom commands:
 
 ```
 custom/ujust/
-├── README.md          # This file
-├── custom-apps.just   # Application installation commands
-└── custom-system.just # System configuration commands
+├── README.md               # This file
+└── custom-dev-managers.just # Dev manager installers (NVM, SDKMAN)
 ```
 
 **Example Files in this directory:**
 
-- [`custom-apps.just`](custom-apps.just) - Application installation commands (Brewfiles, Flatpaks, JetBrains Toolbox)
-- [`custom-system.just`](custom-system.just) - System configuration commands (benchmarks, dev groups, maintenance)
+- [`custom-dev-managers.just`](custom-dev-managers.just) - NVM and SDKMAN installers
 
 ## Example Commands
 
@@ -120,7 +118,7 @@ install-dev-tools:
     brew bundle --file /usr/share/ublue-os/homebrew/development.Brewfile
 ```
 
-**See examples in [`custom-apps.just`](custom-apps.just)** for Brewfile shortcuts.
+**See examples in your custom `.just` files** for Brewfile shortcuts.
 
 ### 2. System Configuration
 
@@ -132,7 +130,7 @@ configure-firewall:
     sudo firewall-cmd --reload
 ```
 
-**See examples in [`custom-system.just`](custom-system.just)** for system configuration.
+**See examples in your custom `.just` files** for system configuration.
 
 ### 3. Development Environment Setup
 
@@ -154,7 +152,7 @@ clean-containers:
     podman volume prune -f
 ```
 
-**See examples in [`custom-system.just`](custom-system.just)** for maintenance tasks.
+**See examples in your custom `.just` files** for maintenance tasks.
 
 ## Important: Package Installation
 
@@ -166,7 +164,7 @@ For runtime package installation, use:
 - **Flatpak** - Install Flatpaks for GUI applications
 - **Containers** - Use toolbox/distrobox for development environments
 
-Example Brewfile shortcut (from [`custom-apps.just`](custom-apps.just)):
+Example Brewfile shortcut:
 
 ```just
 [group('Apps')]
@@ -193,16 +191,15 @@ Test locally before committing:
 Or test the just files directly:
 
 ```bash
-just --justfile custom/ujust/custom-apps.just --list
-just --justfile custom/ujust/custom-apps.just install-something
+just --justfile custom/ujust/custom-dev-managers.just --list
+just --justfile custom/ujust/custom-dev-managers.just install-something
 ```
 
 ## Customization
 
-**Start by editing the example files:**
+**Start by editing your custom files:**
 
-- **[`custom-apps.just`](custom-apps.just)** - Add your application installation commands
-- **[`custom-system.just`](custom-system.just)** - Add your system configuration commands
+- **[`custom-dev-managers.just`](custom-dev-managers.just)** - NVM and SDKMAN installers
 
 **Create new files** for different categories:
 
@@ -234,8 +231,7 @@ setup-dev:
 
 The included files provide starting examples:
 
-- **[`custom-apps.just`](custom-apps.just)** - Application installation commands
-- **[`custom-system.just`](custom-system.just)** - System configuration commands
+- **[`custom-dev-managers.just`](custom-dev-managers.just)** - NVM and SDKMAN installers
 
 These files show how to:
 

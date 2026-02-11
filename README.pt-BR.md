@@ -24,7 +24,7 @@ Aqui estão as mudanças em relação ao Bluefin DX. Esta imagem é baseada no B
 
 ### Aplicações adicionadas (runtime)
 
-- **Ferramentas CLI (Homebrew)**: Nenhuma (ainda sem adições no Homebrew).
+- **Ferramentas CLI (Homebrew)**: Nenhuma (ainda sem Brewfiles).
 - **Apps GUI (Flatpak)**: Zen Browser.
 
 ### Removidos/Desativados
@@ -34,8 +34,9 @@ Aqui estão as mudanças em relação ao Bluefin DX. Esta imagem é baseada no B
 ### Mudanças de configuração
 
 - Sessões de desktop duplas disponíveis no GDM (GNOME e COSMIC).
+- Comandos customizados do ujust disponíveis: install-nvm, install-sdkman, install-dev-managers.
 
-*Última atualização: 2026-02-03*
+*Última atualização: 2026-02-10*
 
 ## O que é esta imagem
 
@@ -87,13 +88,17 @@ just format             # Formata todos os scripts bash com shfmt
 just --list             # Mostra todos os comandos disponíveis
 ```
 
-**Flag para exemplos customizados:**
+**Comandos ujust customizados (na imagem):**
 
-Por padrao, os Brewfiles e exemplos de ujust nao sao aplicados no build. Para habilitar, crie este arquivo antes de construir:
+Esta imagem inclui comandos `ujust` para gerenciadores de desenvolvimento:
 
 ```bash
-touch custom/.enable-custom
+ujust install-nvm
+ujust install-sdkman
+ujust install-dev-managers
 ```
+
+Não existem Brewfiles por padrão. Se você adicionar arquivos `.Brewfile` (correspondentes ao padrão `*.Brewfile`) em qualquer lugar dentro de `custom/brew/`, eles serão copiados durante o build automaticamente.
 
 **Fluxo completo:**
 
@@ -134,26 +139,26 @@ Na tela de login (GDM), clique no **ícone de engrenagem ⚙️** para seleciona
 - **GNOME** - Desktop padrão do Bluefin
 - **COSMIC** - Novo ambiente desktop da System76
 
-## Solucao de problemas
+## Solução de problemas
 
-### Sessao COSMIC nao aparece no GDM
+### Sessão COSMIC não aparece no GDM
 
 1. Verifique pacotes: `rpm -qa | grep -i cosmic`
-2. Verifique o arquivo de sessao: `ls /usr/share/wayland-sessions/cosmic.desktop`
+2. Verifique o arquivo de sessão: `ls /usr/share/wayland-sessions/cosmic.desktop`
 3. Reinicie o GDM: `sudo systemctl restart gdm`
 
-### VSCode ou Warp nao abre
+### VSCode ou Warp não abre
 
 - Verifique RPM: `rpm -q code-insiders warp-terminal`
-- Confirme que /opt esta gravavel dentro da imagem (necessario para RPM)
+- Confirme que /opt está gravável dentro da imagem (necessário para RPM)
 
 ### Build local falha
 
-- Verifique espaco: `df -h`
+- Verifique espaço: `df -h`
 - Limpe e tente de novo: `just clean && just build`
 - Veja logs: `journalctl -xe`
 
-### VM nao inicia
+### VM não inicia
 
 - Verifique KVM: `ls -l /dev/kvm`
 - Recrie a imagem: `just build-qcow2`
@@ -163,9 +168,9 @@ Na tela de login (GDM), clique no **ícone de engrenagem ⚙️** para seleciona
 <details>
 <summary>Ver screenshots</summary>
 
-### Seletor de sessao no GDM
+### Seletor de sessão no GDM
 
-![Seletor de sessao no GDM](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/gdm-selector.png)
+![Seletor de sessão no GDM](https://raw.githubusercontent.com/ericrocha97/bluefin/main/docs/images/gdm-selector.png)
 
 ### Desktop COSMIC
 
