@@ -87,11 +87,12 @@ fi
 
 log_info "Installing RPM Fusion codec packages..."
 CODEC_PACKAGES=(
-    libavcodec-freeworld
+    libavcodec-freeworld.x86_64
+    vvenc-libs.x86_64
     gstreamer1-plugins-ugly
     libvdpau-va-gl
 )
-dnf5 install -y --allowerasing --setopt=best=False "${CODEC_PACKAGES[@]}"
+dnf5 install -y --allowerasing --allow-downgrade --setopt=best=False --setopt=allow_vendor_change=1 "${CODEC_PACKAGES[@]}"
 for pkg in "${CODEC_PACKAGES[@]}"; do
     verify_package "$pkg"
 done
