@@ -20,6 +20,11 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
   - Native applications: Settings, Files (file manager), Edit (text editor), Terminal, Store (app store), Player (media player), Screenshot tool
   - System components: wallpapers, icons, notifications, OSD, app library, workspaces manager
   - Desktop portal integration (xdg-desktop-portal-cosmic)
+- **Hyprland**: Dynamic tiling Wayland compositor with supporting utilities:
+  - Waybar (status bar), Font Awesome icons
+  - xdg-desktop-portal-hyprland (screen sharing)
+  - hypridle (idle daemon), hyprlock (screen locker), hyprshot (screenshots)
+  - cliphist (clipboard manager), eww-git (widget system), waypaper (wallpaper manager)
 - **CLI Tools**: copr-cli (COPR repository management and monitoring)
 - **System Tools**: earlyoom (OOM prevention), ffmpegthumbnailer (video thumbnails)
 - **Codecs**: Full multimedia codecs via negativo17/fedora-multimedia (base image), libvdpau-va-gl
@@ -47,23 +52,24 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 
 ### Configuration Changes
 
-- Dual desktop sessions available in GDM (GNOME and COSMIC).
+- Multiple desktop sessions available in GDM (GNOME, COSMIC, and Hyprland).
 - Custom ujust commands available: install-nvm, install-sdkman, install-dev-managers.
 
-*Last updated: 2026-02-12*
+*Last updated: 2026-02-17*
 
 ## What is this image
 
-bluefin-dx-custom is a developer-focused Bluefin image with **GNOME + COSMIC dual desktop** support. You can choose which desktop environment to use at the login screen.
+bluefin-dx-custom is a developer-focused Bluefin image with **GNOME + COSMIC + Hyprland multi-desktop** support. You can choose which desktop environment to use at the login screen.
 
 ## What changes in this version
 
 Based on **Bluefin DX**, this image adds:
 
 - **COSMIC desktop** (System76) as an alternative to GNOME
+- **Hyprland** (dynamic tiling compositor) for advanced window management
 - **VSCode Insiders** installed via RPM
 - **Warp Terminal** installed via RPM
-- **Dual desktop support**: Choose GNOME or COSMIC at login (GDM)
+- **Multi-desktop support**: Choose GNOME, COSMIC, or Hyprland at login (GDM)
 - All Bluefin DX features (containers, DevPods, CLI tools, etc.)
 
 Base image: `ghcr.io/ublue-os/bluefin-dx:stable-daily`
