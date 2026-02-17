@@ -95,6 +95,12 @@ dnf5 install -y libvdpau-va-gl
 verify_package "libvdpau-va-gl"
 log_success "Additional multimedia packages installed"
 
+# systemd-boot-unsigned - Unsigned systemd-boot EFI boot manager
+log_info "Installing systemd-boot-unsigned..."
+dnf5 install -y systemd-boot-unsigned
+verify_package "systemd-boot-unsigned"
+log_success "systemd-boot-unsigned installed"
+
 echo "::endgroup::"
 
 echo "::group:: System Configuration"
