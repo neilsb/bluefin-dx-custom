@@ -20,7 +20,7 @@
     {
       "type": "command",
       "key": "󱋩",
-      "text": "/usr/bin/bluefin-cosmic-dx-info.sh"
+      "text": "/usr/bin/bluefin-dx-custom-info.sh"
     },
     {
       "type": "os",
@@ -46,12 +46,12 @@
     {
       "type": "command",
       "key": "󰊢",
-      "text": "/usr/bin/bluefin-cosmic-dx-info.sh --release"
+      "text": "/usr/bin/bluefin-dx-custom-info.sh --release"
     },
     {
       "type": "command",
       "key": "󰃭",
-      "text": "/usr/bin/bluefin-cosmic-dx-info.sh --build-date"
+      "text": "/usr/bin/bluefin-dx-custom-info.sh --build-date"
     },
     "break",
     {
@@ -99,7 +99,7 @@
     {
       "type": "command",
       "key": "",
-      "text": "/usr/bin/bluefin-cosmic-dx-info.sh --shell"
+      "text": "/usr/bin/bluefin-dx-custom-info.sh --shell"
     },
     {
       "type": "terminal",

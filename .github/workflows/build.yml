@@ -17,7 +17,7 @@ env:
   IMAGE_DESC: "My Customized Universal Blue Image With Cosmic DX Features"
   IMAGE_KEYWORDS: "bootc,ublue,universal-blue,cosmic,cosmic-dx,custom-image"
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4" # Put your own image here for a fancy profile on https://artifacthub.io/!
-  IMAGE_NAME: "bluefin-cosmic-dx" # output image name
+  IMAGE_NAME: "bluefin-dx-custom" # output image name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}" # do not edit
   DEFAULT_TAG: "stable"
 

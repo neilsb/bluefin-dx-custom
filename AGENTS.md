@@ -1,4 +1,4 @@
-# Copilot Instructions for bluefin-cosmic-dx bootc Image Template
+# Copilot Instructions for bluefin-dx-custom bootc Image Template
 
 ## CRITICAL: GitHub API Usage
 
@@ -33,9 +33,9 @@
 
 **When this repository is used as a template, you MUST:**
 
-### 1. Rename ALL instances of `bluefin-cosmic-dx`
+### 1. Rename ALL instances of `bluefin-dx-custom`
 
-**Source of truth**: `Containerfile` line 9: `# Name: bluefin-cosmic-dx`
+**Source of truth**: `Containerfile` line 9: `# Name: bluefin-dx-custom`
 
 **Files to update:**
 
@@ -1188,6 +1188,6 @@ Assisted-by: Claude 3.5 Sonnet via GitHub Copilot
 
 ---
 
-**Last Updated**: 2025-11-14  
-**Template Version**: bluefin-cosmic-dx (Enhanced with comprehensive Copilot instructions)  
+**Last Updated**: 2025-11-14
+**Template Version**: bluefin-dx-custom (Enhanced with comprehensive Copilot instructions)
 **Maintainer**: Universal Blue Community

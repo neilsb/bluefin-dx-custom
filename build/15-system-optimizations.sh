@@ -136,9 +136,9 @@ cp -v "${SYSTEM_FILES_DIR}"/usr/share/ublue-os/fastfetch.jsonc /usr/share/ublue-
 log_success "Custom fastfetch.jsonc installed (overrides upstream)"
 
 # Install custom image info script
-cp -v "${SYSTEM_FILES_DIR}"/usr/bin/bluefin-cosmic-dx-info.sh /usr/bin/bluefin-cosmic-dx-info.sh
-chmod +x /usr/bin/bluefin-cosmic-dx-info.sh
-log_success "bluefin-cosmic-dx-info.sh installed and made executable"
+cp -v "${SYSTEM_FILES_DIR}"/usr/bin/bluefin-dx-custom-info.sh /usr/bin/bluefin-dx-custom-info.sh
+chmod +x /usr/bin/bluefin-dx-custom-info.sh
+log_success "bluefin-dx-custom-info.sh installed and made executable"
 
 echo "::endgroup::"
 

@@ -1,4 +1,4 @@
-# Copilot Instructions for bluefin-cosmic-dx
+# Copilot Instructions for bluefin-dx-custom
 
 This repository uses comprehensive agent instructions. Please refer to the main documentation file:
 

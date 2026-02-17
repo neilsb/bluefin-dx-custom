@@ -13,7 +13,7 @@ This directory contains build scripts that run during image creation. Scripts ar
 - **`15-system-optimizations.sh`** - Installs CachyOS/LinuxToys system optimizations (sysctl, udev, modprobe, tmpfiles, journald), configures earlyoom, rpm-ostreed auto-updates, and GNOME tweaks.
 - **`20-third-party-repos.sh`** - Installs VSCode Insiders and Warp Terminal from official RPM repos.
 - **`30-cosmic-desktop.sh`** - Installs COSMIC desktop from System76's COPR repository.
-- **`99-versions.sh`** - Writes a version manifest to `/usr/share/bluefin-cosmic-dx/manifest.json`.
+- **`99-versions.sh`** - Writes a version manifest to `/usr/share/bluefin-dx-custom/manifest.json`.
 - **`copr-helpers.sh`** - Helper functions for COPR management and logging.
 
 ## Custom Files (Brewfiles and ujust)

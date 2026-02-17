@@ -4,7 +4,7 @@
 
 ### 1. Rename Template
 
-- [ ] Update `bluefin-cosmic-dx` to your name in: Containerfile, Justfile, README.md, artifacthub-repo.yml
+- [ ] Update `bluefin-dx-custom` to your name in: Containerfile, Justfile, README.md, artifacthub-repo.yml
 
 ### 2. Enable GitHub Actions
 

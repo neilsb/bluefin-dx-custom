@@ -1,7 +1,7 @@
-# bluefin-cosmic-dx
+# bluefin-dx-custom
 
 [![Build](https://github.com/ericrocha97/bluefin/actions/workflows/build.yml/badge.svg)](https://github.com/ericrocha97/bluefin/actions/workflows/build.yml)
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/bluefin-cosmic-dx)](https://artifacthub.io/packages/search?repo=bluefin-cosmic-dx)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/bluefin-dx-custom)](https://artifacthub.io/packages/search?repo=bluefin-dx-custom)
 
 Este projeto foi criado usando o template finpilot: <https://github.com/projectbluefin/finpilot>.
 
@@ -54,7 +54,7 @@ Aqui estão as mudanças em relação ao Bluefin DX. Esta imagem é baseada no B
 
 ## O que é esta imagem
 
-bluefin-cosmic-dx é uma imagem Bluefin focada em desenvolvimento, com **suporte a GNOME + COSMIC dual desktop**. Você pode escolher qual ambiente usar na tela de login.
+bluefin-dx-custom é uma imagem Bluefin focada em desenvolvimento, com **suporte a GNOME + COSMIC dual desktop**. Você pode escolher qual ambiente usar na tela de login.
 
 ## O que muda nesta versão
 
@@ -131,7 +131,7 @@ just run-vm-qcow2       # 3. Executa a VM
 Trocar seu sistema para esta imagem:
 
 ```bash
-sudo bootc switch ghcr.io/ericrocha97/bluefin-cosmic-dx:stable
+sudo bootc switch ghcr.io/ericrocha97/bluefin-dx-custom:stable
 sudo systemctl reboot
 ```
 

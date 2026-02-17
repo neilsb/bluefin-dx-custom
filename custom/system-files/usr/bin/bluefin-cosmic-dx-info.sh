@@ -1,19 +1,19 @@
 #!/usr/bin/bash
 ###############################################################################
-# bluefin-cosmic-dx-info.sh - Custom image info for fastfetch
+# bluefin-dx-custom-info.sh - Custom image info for fastfetch
 ###############################################################################
 # Reads the build manifest and displays custom image information.
 # Used by fastfetch.jsonc via the "command" module type.
 #
 # Usage:
-#   bluefin-cosmic-dx-info.sh                # Output image name + version
-#   bluefin-cosmic-dx-info.sh --release      # Output GitHub release tag
-#   bluefin-cosmic-dx-info.sh --build-date   # Output formatted build date
-#   bluefin-cosmic-dx-info.sh --shell        # Output user's actual shell + version
+#   bluefin-dx-custom-info.sh                # Output image name + version
+#   bluefin-dx-custom-info.sh --release      # Output GitHub release tag
+#   bluefin-dx-custom-info.sh --build-date   # Output formatted build date
+#   bluefin-dx-custom-info.sh --shell        # Output user's actual shell + version
 ###############################################################################
 
-MANIFEST="/usr/share/bluefin-cosmic-dx/manifest.json"
-IMAGE_NAME="bluefin-cosmic-dx"
+MANIFEST="/usr/share/bluefin-dx-custom/manifest.json"
+IMAGE_NAME="bluefin-dx-custom"
 
 case "${1:-}" in
     --release)

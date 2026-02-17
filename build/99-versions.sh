@@ -12,7 +12,7 @@ set -euo pipefail
 # shellcheck source=/dev/null
 source /ctx/build/copr-helpers.sh
 
-manifest_dir="/usr/share/bluefin-cosmic-dx"
+manifest_dir="/usr/share/bluefin-dx-custom"
 manifest_path="${manifest_dir}/manifest.json"
 
 log_section "Writing version manifest"

@@ -1,9 +1,9 @@
 ###############################################################################
 # PROJECT NAME CONFIGURATION
 ###############################################################################
-# Name: bluefin-cosmic-dx
+# Name: bluefin-dx-custom
 #
-# IMPORTANT: Change "bluefin-cosmic-dx" above to your desired project name.
+# IMPORTANT: Change "bluefin-dx-custom" above to your desired project name.
 # This name should be used consistently throughout the repository in:
 #   - Justfile: export image_name := env("IMAGE_NAME", "your-name-here")
 #   - README.md: # your-name-here (title)
