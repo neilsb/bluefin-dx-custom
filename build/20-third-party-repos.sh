@@ -90,8 +90,16 @@ log_step "Installing Ghostty Terminal from COPR..."
 
 log_info "Ghostty is a fast, feature-rich, cross-platform terminal emulator"
 
-# Install ghostty from COPR using isolated pattern
-copr_install_isolated "pgdev/ghostty" ghostty
+# Ghostty has a known conflict with ncurses-term over /usr/share/terminfo/g/ghostty
+# We need to use --allowerasing to resolve this conflict
+log_info "Enabling COPR repository pgdev/ghostty temporarily..."
+dnf5 -y copr enable pgdev/ghostty
+
+log_info "Disabling COPR repository (will use --enablerepo for install)..."
+dnf5 -y copr disable pgdev/ghostty
+
+log_info "Installing ghostty with --allowerasing to resolve terminfo conflict..."
+dnf5 -y install --allowerasing --enablerepo="copr:copr.fedorainfracloud.org:pgdev:ghostty" ghostty
 
 # Verify installation
 verify_package "ghostty"
