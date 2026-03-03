@@ -81,5 +81,32 @@ rm -f /etc/yum.repos.d/warpdotdev.repo
 log_success "Warp Terminal installation complete"
 echo "::endgroup::"
 
+###############################################################################
+# Noctalia Shell
+###############################################################################
+
+echo "::group:: Install Noctalia Shell"
+log_step "Installing Noctalia Shell from Terra repository..."
+
+log_info "Noctalia is a modern shell environment from Fyra Labs"
+
+log_info "Installing Terra repository..."
+# Install Terra repo using the special command from their docs
+# Note: Using --nogpgcheck for initial repo setup as per Fyra Labs instructions
+dnf5 install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+
+log_info "Installing noctalia-shell package..."
+dnf5 install -y noctalia-shell
+
+# Verify installation
+verify_package "noctalia-shell"
+
+log_info "Cleaning up Terra repository files..."
+# Remove repo files since they won't work at runtime
+rm -f /etc/yum.repos.d/terra*.repo
+
+log_success "Noctalia Shell installation complete"
+echo "::endgroup::"
+
 log_section "Third-Party Software Installation Complete"
 log_success "All third-party applications installed successfully"
