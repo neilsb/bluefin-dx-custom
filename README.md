@@ -26,6 +26,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
   - hypridle (idle daemon), hyprlock (screen locker), hyprshot (screenshots)
   - cliphist (clipboard manager), eww-git (widget system), waypaper (wallpaper manager)
 - **CLI Tools**: copr-cli (COPR repository management and monitoring)
+- **Terminal Emulators**: Ghostty (fast, feature-rich, cross-platform terminal emulator)
 - **System Tools**: earlyoom (OOM prevention), ffmpegthumbnailer (video thumbnails)
 - **Codecs**: Full multimedia codecs via negativo17/fedora-multimedia (base image), libvdpau-va-gl
 
@@ -55,7 +56,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 - Multiple desktop sessions available in GDM (GNOME, COSMIC, and Hyprland).
 - Custom ujust commands available: install-nvm, install-sdkman, install-dev-managers.
 
-*Last updated: 2026-02-17*
+*Last updated: 2026-03-03*
 
 ## What is this image
 
@@ -69,6 +70,7 @@ Based on **Bluefin DX**, this image adds:
 - **Hyprland** (dynamic tiling compositor) for advanced window management
 - **VSCode Insiders** installed via RPM
 - **Warp Terminal** installed via RPM
+- **Ghostty Terminal** installed via COPR (fast, feature-rich terminal emulator)
 - **Multi-desktop support**: Choose GNOME, COSMIC, or Hyprland at login (GDM)
 - All Bluefin DX features (containers, DevPods, CLI tools, etc.)
 

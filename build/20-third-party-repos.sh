@@ -81,5 +81,23 @@ rm -f /etc/yum.repos.d/warpdotdev.repo
 log_success "Warp Terminal installation complete"
 echo "::endgroup::"
 
+###############################################################################
+# Ghostty Terminal
+###############################################################################
+
+echo "::group:: Install Ghostty Terminal"
+log_step "Installing Ghostty Terminal from COPR..."
+
+log_info "Ghostty is a fast, feature-rich, cross-platform terminal emulator"
+
+# Install ghostty from COPR using isolated pattern
+copr_install_isolated "pgdev/ghostty" ghostty
+
+# Verify installation
+verify_package "ghostty"
+
+log_success "Ghostty Terminal installation complete"
+echo "::endgroup::"
+
 log_section "Third-Party Software Installation Complete"
 log_success "All third-party applications installed successfully"
