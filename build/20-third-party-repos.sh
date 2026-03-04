@@ -108,5 +108,23 @@ rm -f /etc/yum.repos.d/terra*.repo
 log_success "Noctalia Shell installation complete"
 echo "::endgroup::"
 
+###############################################################################
+# Ghostty Terminal
+###############################################################################
+
+echo "::group:: Install Ghostty Terminal"
+log_step "Installing Ghostty Terminal from COPR..."
+
+log_info "Ghostty is a modern, fast, feature-rich terminal emulator"
+
+# Install from COPR using isolated installation pattern
+copr_install_isolated "pgdev/ghostty" ghostty
+
+# Verify installation
+verify_package "ghostty"
+
+log_success "Ghostty Terminal installation complete"
+echo "::endgroup::"
+
 log_section "Third-Party Software Installation Complete"
 log_success "All third-party applications installed successfully"
