@@ -125,7 +125,8 @@ dnf5 download -y ghostty
 
 log_info "Installing ghostty with --replacefiles to handle terminfo conflicts..."
 # Use rpm directly with --replacefiles to replace the conflicting terminfo file
-rpm -ivh --replacefiles ghostty-*.rpm
+# Only install the binary RPM (x86_64), not the source RPM
+rpm -ivh --replacefiles ghostty-*x86_64.rpm
 
 # Verify installation
 verify_package "ghostty"
