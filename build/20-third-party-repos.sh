@@ -117,11 +117,24 @@ log_step "Installing Ghostty Terminal from COPR..."
 
 log_info "Ghostty is a modern, fast, feature-rich terminal emulator"
 
-# Install from COPR using isolated installation pattern
-copr_install_isolated "pgdev/ghostty" ghostty
+log_info "Enabling pgdev/ghostty COPR repository..."
+dnf5 -y copr enable pgdev/ghostty
+
+log_info "Downloading ghostty package..."
+dnf5 download -y ghostty
+
+log_info "Installing ghostty with --replacefiles to handle terminfo conflicts..."
+# Use rpm directly with --replacefiles to replace the conflicting terminfo file
+rpm -ivh --replacefiles ghostty-*.rpm
 
 # Verify installation
 verify_package "ghostty"
+
+log_info "Cleaning up downloaded RPM..."
+rm -f ghostty-*.rpm
+
+log_info "Disabling COPR repository..."
+dnf5 -y copr disable pgdev/ghostty
 
 log_success "Ghostty Terminal installation complete"
 echo "::endgroup::"

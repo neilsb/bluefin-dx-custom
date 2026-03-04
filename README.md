@@ -27,6 +27,8 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
   - cliphist (clipboard manager), eww-git (widget system), waypaper (wallpaper manager)
 - **CLI Tools**: copr-cli (COPR repository management and monitoring)
 - **Shell Environment**: Noctalia Shell (modern shell environment from Fyra Labs)
+- **Terminals**: Ghostty (modern, fast terminal emulator), Warp Terminal
+- **Development Tools**: VSCode Insiders
 - **System Tools**: earlyoom (OOM prevention), ffmpegthumbnailer (video thumbnails)
 - **Codecs**: Full multimedia codecs via negativo17/fedora-multimedia (base image), libvdpau-va-gl
 
@@ -56,7 +58,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 - Multiple desktop sessions available in GDM (GNOME, COSMIC, and Hyprland).
 - Custom ujust commands available: install-nvm, install-sdkman, install-dev-managers.
 
-*Last updated: 2026-02-17*
+*Last updated: 2026-03-04*
 
 ## What is this image
 
@@ -70,6 +72,7 @@ Based on **Bluefin DX**, this image adds:
 - **Hyprland** (dynamic tiling compositor) for advanced window management
 - **VSCode Insiders** installed via RPM
 - **Warp Terminal** installed via RPM
+- **Ghostty Terminal** installed via COPR (modern terminal emulator)
 - **Noctalia Shell** installed via Terra repository (modern shell environment)
 - **Multi-desktop support**: Choose GNOME, COSMIC, or Hyprland at login (GDM)
 - All Bluefin DX features (containers, DevPods, CLI tools, etc.)
