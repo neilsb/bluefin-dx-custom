@@ -53,7 +53,10 @@ HYPRLAND_PACKAGES=(
     xdg-desktop-portal-hyprland
     hyprland
     cliphist
-    eww-git
+    hyprland-guiutils
+    hyprland-qt-support
+    hyprqt6engine
+    hyprutils
     hypridle
     hyprlock
     hyprshot
@@ -65,7 +68,7 @@ log_info "Packages to install: ${HYPRLAND_PACKAGES[*]}"
 
 # Install Hyprland and related packages from COPR
 # Using isolated pattern to prevent COPR from persisting
-copr_install_isolated "solopasha/hyprland" "${HYPRLAND_PACKAGES[@]}"
+copr_install_isolated "nett00n/hyprland" "${HYPRLAND_PACKAGES[@]}"
 
 echo "::endgroup::"
 
