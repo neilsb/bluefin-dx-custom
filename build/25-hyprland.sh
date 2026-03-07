@@ -52,23 +52,18 @@ echo "::group:: Install Hyprland from COPR"
 HYPRLAND_PACKAGES=(
     xdg-desktop-portal-hyprland
     hyprland
-    cliphist
     hyprland-guiutils
-    hyprland-qt-support
-    hyprqt6engine
     hyprutils
     hypridle
     hyprlock
-    hyprshot
-    waypaper
 )
 
-log_step "Installing Hyprland packages from COPR solopasha/hyprland..."
+log_step "Installing Hyprland packages from COPR mbaldessari/hyprland..."
 log_info "Packages to install: ${HYPRLAND_PACKAGES[*]}"
 
 # Install Hyprland and related packages from COPR
 # Using isolated pattern to prevent COPR from persisting
-copr_install_isolated "nett00n/hyprland" "${HYPRLAND_PACKAGES[@]}"
+copr_install_isolated "mbaldessari/hyprland" "${HYPRLAND_PACKAGES[@]}"
 
 echo "::endgroup::"
 
