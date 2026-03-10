@@ -21,10 +21,10 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
   - System components: wallpapers, icons, notifications, OSD, app library, workspaces manager
   - Desktop portal integration (xdg-desktop-portal-cosmic)
 - **Hyprland**: Dynamic tiling Wayland compositor with supporting utilities:
-  - Waybar (status bar), Font Awesome icons
-  - xdg-desktop-portal-hyprland (screen sharing)
-  - hypridle (idle daemon), hyprlock (screen locker), hyprshot (screenshots)
-  - cliphist (clipboard manager), eww-git (widget system), waypaper (wallpaper manager)
+  - Core: hyprland (compositor), hyprland-guiutils (GUI utilities), hyprutils (utility library)
+  - UI: Waybar (status bar), Font Awesome icons
+  - Integration: xdg-desktop-portal-hyprland (screen sharing)
+  - Session: hypridle (idle daemon), hyprlock (screen locker)
 - **CLI Tools**: copr-cli (COPR repository management and monitoring)
 - **Shell Environment**: Noctalia Shell (modern shell environment from Fyra Labs)
 - **Terminals**: Ghostty (modern, fast terminal emulator)
@@ -58,7 +58,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 - Multiple desktop sessions available in GDM (GNOME, COSMIC, and Hyprland).
 - Custom ujust commands available: install-nvm, install-sdkman, install-dev-managers.
 
-*Last updated: 2026-03-04*
+*Last updated: 2026-03-10*
 
 ## What is this image
 

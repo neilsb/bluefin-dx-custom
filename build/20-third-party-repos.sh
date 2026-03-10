@@ -3,7 +3,7 @@
 set -eoux pipefail
 
 ###############################################################################
-# Install VSCode Insiders and Warp Terminal from Official Repositories
+# Install VSCode Insiders from Official Repository
 ###############################################################################
 # Conventions:
 # - Use dnf5 exclusively
@@ -47,38 +47,6 @@ log_info "Cleaning up Microsoft repository file..."
 rm -f /etc/yum.repos.d/vscode.repo
 
 log_success "VSCode Insiders installation complete"
-echo "::endgroup::"
-
-###############################################################################
-# Warp Terminal
-###############################################################################
-
-echo "::group:: Install Warp Terminal"
-log_step "Installing Warp Terminal..."
-
-log_info "Adding Warp Terminal repository..."
-cat > /etc/yum.repos.d/warpdotdev.repo << 'EOF'
-[warpdotdev]
-name=warpdotdev
-baseurl=https://releases.warp.dev/linux/rpm/stable
-enabled=1
-gpgcheck=1
-gpgkey=https://releases.warp.dev/linux/keys/warp.asc
-EOF
-
-log_info "Importing Warp GPG key..."
-rpm --import https://releases.warp.dev/linux/keys/warp.asc
-
-log_info "Installing warp-terminal package..."
-dnf5 install -y warp-terminal
-
-# Verify installation
-verify_package "warp-terminal"
-
-log_info "Cleaning up Warp repository file..."
-rm -f /etc/yum.repos.d/warpdotdev.repo
-
-log_success "Warp Terminal installation complete"
 echo "::endgroup::"
 
 ###############################################################################
