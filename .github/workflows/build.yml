@@ -41,7 +41,6 @@ jobs:
       bluefin_version: ${{ steps.versions.outputs.bluefin_version }}
       kernel_version: ${{ steps.versions.outputs.kernel_version }}
       vscode_version: ${{ steps.versions.outputs.vscode_version }}
-      warp_version: ${{ steps.versions.outputs.warp_version }}
       cosmic_session_version: ${{ steps.versions.outputs.cosmic_session_version }}
       changelog: ${{ steps.versions.outputs.changelog }}
 
@@ -170,7 +169,6 @@ jobs:
           bluefin_version=$(podman run --rm "$IMAGE" sh -c 'grep "^IMAGE_VERSION=" /etc/os-release | cut -d= -f2 | tr -d "\""' || echo "unknown")
           kernel_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" kernel)")
           vscode_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" code-insiders)")
-          warp_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" warp-terminal)")
           cosmic_session_version=$(normalize_version "$(get_version_from_manifest "$current_manifest" cosmic-session)")
 
           latest_tag=$(gh release list --limit 1 --json tagName -q '.[0].tagName' 2>/dev/null || true)
@@ -186,7 +184,6 @@ jobs:
           changelog_lines=()
           tracked_packages=(
             code-insiders
-            warp-terminal
             cosmic-session
             cosmic-comp
             cosmic-panel
@@ -220,7 +217,6 @@ jobs:
           echo "bluefin_version=$bluefin_version" >> "$GITHUB_OUTPUT"
           echo "kernel_version=$kernel_version" >> "$GITHUB_OUTPUT"
           echo "vscode_version=$vscode_version" >> "$GITHUB_OUTPUT"
-          echo "warp_version=$warp_version" >> "$GITHUB_OUTPUT"
           echo "cosmic_session_version=$cosmic_session_version" >> "$GITHUB_OUTPUT"
           {
             echo "changelog<<EOF"
@@ -360,7 +356,6 @@ jobs:
             | Bluefin | ${{ needs.build_push.outputs.bluefin_version }} |
             | Kernel | ${{ needs.build_push.outputs.kernel_version }} |
             | VSCode Insiders | ${{ needs.build_push.outputs.vscode_version }} |
-            | Warp Terminal | ${{ needs.build_push.outputs.warp_version }} |
             | COSMIC Session | ${{ needs.build_push.outputs.cosmic_session_version }} |
 
             ## Changes Since Previous Release 📝

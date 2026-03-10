@@ -27,7 +27,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
   - cliphist (clipboard manager), eww-git (widget system), waypaper (wallpaper manager)
 - **CLI Tools**: copr-cli (COPR repository management and monitoring)
 - **Shell Environment**: Noctalia Shell (modern shell environment from Fyra Labs)
-- **Terminals**: Ghostty (modern, fast terminal emulator), Warp Terminal
+- **Terminals**: Ghostty (modern, fast terminal emulator)
 - **Development Tools**: VSCode Insiders
 - **System Tools**: earlyoom (OOM prevention), ffmpegthumbnailer (video thumbnails)
 - **Codecs**: Full multimedia codecs via negativo17/fedora-multimedia (base image), libvdpau-va-gl
@@ -71,7 +71,6 @@ Based on **Bluefin DX**, this image adds:
 - **COSMIC desktop** (System76) as an alternative to GNOME
 - **Hyprland** (dynamic tiling compositor) for advanced window management
 - **VSCode Insiders** installed via RPM
-- **Warp Terminal** installed via RPM
 - **Ghostty Terminal** installed via COPR (modern terminal emulator)
 - **Noctalia Shell** installed via Terra repository (modern shell environment)
 - **Multi-desktop support**: Choose GNOME, COSMIC, or Hyprland at login (GDM)
@@ -172,9 +171,9 @@ At the GDM login screen, click the **⚙️ gear icon** to select:
 2. Check session file: `ls /usr/share/wayland-sessions/cosmic.desktop`
 3. Restart GDM: `sudo systemctl restart gdm`
 
-### VSCode or Warp fails to start
+### VSCode fails to start
 
-- Verify RPM install: `rpm -q code-insiders warp-terminal`
+- Verify RPM install: `rpm -q code-insiders`
 - Ensure /opt is writable inside the image (required for RPM installs)
 
 ### Local build fails

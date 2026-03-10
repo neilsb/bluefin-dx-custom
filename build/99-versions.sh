@@ -64,7 +64,6 @@ cat > "${manifest_path}" <<EOF
     "kernel": "$(json_escape "$(get_rpm_version kernel)")",
     "copr-cli": "$(json_escape "$(get_rpm_version copr-cli)")",
     "code-insiders": "$(json_escape "$(get_rpm_version code-insiders)")",
-    "warp-terminal": "$(json_escape "$(get_rpm_version warp-terminal)")",
     "cosmic-session": "$(json_escape "$(get_rpm_version cosmic-session)")",
     "cosmic-greeter": "$(json_escape "$(get_rpm_version cosmic-greeter)")",
     "cosmic-comp": "$(json_escape "$(get_rpm_version cosmic-comp)")",
