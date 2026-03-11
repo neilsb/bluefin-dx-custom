@@ -85,8 +85,8 @@ log_step "Installing Ghostty Terminal from COPR..."
 
 log_info "Ghostty is a modern, fast, feature-rich terminal emulator"
 
-log_info "Enabling pgdev/ghostty COPR repository..."
-dnf5 -y copr enable pgdev/ghostty
+log_info "Enabling scottames/ghostty COPR repository..."
+dnf5 -y copr enable scottames/ghostty
 
 log_info "Downloading ghostty package..."
 dnf5 download -y ghostty
@@ -103,7 +103,7 @@ log_info "Cleaning up downloaded RPM..."
 rm -f ghostty-*.rpm
 
 log_info "Disabling COPR repository..."
-dnf5 -y copr disable pgdev/ghostty
+dnf5 -y copr disable scottames/ghostty
 
 log_success "Ghostty Terminal installation complete"
 echo "::endgroup::"
