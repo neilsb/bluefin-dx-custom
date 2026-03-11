@@ -50,13 +50,14 @@ log_success "VSCode Insiders installation complete"
 echo "::endgroup::"
 
 ###############################################################################
-# Noctalia Shell
+# Ghostty & Noctalia Shell
 ###############################################################################
 
-echo "::group:: Install Noctalia Shell"
-log_step "Installing Noctalia Shell from Terra repository..."
+echo "::group:: Install Ghostty & Noctalia Shell"
+log_step "Installing items from Terra repository..."
 
 log_info "Noctalia is a modern shell environment from Fyra Labs"
+log_info "Ghostty is a modern, fast, feature-rich terminal emulator"
 
 log_info "Installing Terra repository..."
 # Install Terra repo using the special command from their docs
@@ -69,43 +70,17 @@ dnf5 install -y noctalia-shell
 # Verify installation
 verify_package "noctalia-shell"
 
-log_info "Cleaning up Terra repository files..."
-# Remove repo files since they won't work at runtime
-rm -f /etc/yum.repos.d/terra*.repo
-
-log_success "Noctalia Shell installation complete"
-echo "::endgroup::"
-
-###############################################################################
-# Ghostty Terminal
-###############################################################################
-
-echo "::group:: Install Ghostty Terminal"
-log_step "Installing Ghostty Terminal from COPR..."
-
-log_info "Ghostty is a modern, fast, feature-rich terminal emulator"
-
-log_info "Enabling scottames/ghostty COPR repository..."
-dnf5 -y copr enable scottames/ghostty
-
-log_info "Downloading ghostty package..."
-dnf5 download -y ghostty
-
-log_info "Installing ghostty with --replacefiles to handle terminfo conflicts..."
-# Use rpm directly with --replacefiles to replace the conflicting terminfo file
-# Only install the binary RPM (x86_64), not the source RPM
-rpm -ivh --replacefiles ghostty-*x86_64.rpm
+log_info "Installing ghostty package..."
+dnf5 install -y ghostty
 
 # Verify installation
 verify_package "ghostty"
 
-log_info "Cleaning up downloaded RPM..."
-rm -f ghostty-*.rpm
+log_info "Cleaning up Terra repository files..."
+# Remove repo files since they won't work at runtime
+rm -f /etc/yum.repos.d/terra*.repo
 
-log_info "Disabling COPR repository..."
-dnf5 -y copr disable scottames/ghostty
-
-log_success "Ghostty Terminal installation complete"
+log_success "Terra items installation complete"
 echo "::endgroup::"
 
 log_section "Third-Party Software Installation Complete"
