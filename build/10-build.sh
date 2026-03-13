@@ -101,6 +101,18 @@ dnf5 install -y swappy
 verify_package "swappy"
 log_success "swappy installed"
 
+# wf-recorder - Wayland native screen recording tool
+log_info "Installing wf-recorder ..."
+dnf5 install -y wf-recorder
+verify_package "wf-recorder"
+log_success "wf-recorder installed"
+
+# tesseract - OCR (Optical Character Recognition) engine
+log_info "Installing tesseract..."
+dnf5 install -y tesseract
+verify_package "tesseract"
+log_success "tesseract installed"
+
 echo "::endgroup::"
 
 echo "::group:: System Configuration"
