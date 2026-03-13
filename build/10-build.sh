@@ -95,6 +95,12 @@ dnf5 install -y libvdpau-va-gl
 verify_package "libvdpau-va-gl"
 log_success "Additional multimedia packages installed"
 
+# swappy - Wayland native snapshot and editor tool
+log_info "Installing swappy..."
+dnf5 install -y swappy
+verify_package "swappy"
+log_success "swappy installed"
+
 echo "::endgroup::"
 
 echo "::group:: System Configuration"
