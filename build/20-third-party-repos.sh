@@ -111,5 +111,37 @@ dnf5 -y copr disable scottames/ghostty
 log_success "Ghostty Terminal installation complete"
 echo "::endgroup::"
 
+###############################################################################
+# MongoDB Shell (mongosh)
+###############################################################################
+
+echo "::group:: Install MongoDB Shell"
+log_step "Installing MongoDB Shell from MongoDB repository..."
+
+log_info "Adding MongoDB repository..."
+cat > /etc/yum.repos.d/mongodb-org.repo << 'EOF'
+[mongodb-org]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/9/mongodb-org/8.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://pgp.mongodb.com/server-8.0.asc
+EOF
+
+log_info "Importing MongoDB GPG key..."
+rpm --import https://pgp.mongodb.com/server-8.0.asc
+
+log_info "Installing mongodb-mongosh-shared-openssl3 package..."
+dnf5 install -y mongodb-mongosh-shared-openssl3
+
+# Verify installation
+verify_package "mongodb-mongosh-shared-openssl3"
+
+log_info "Cleaning up MongoDB repository file..."
+rm -f /etc/yum.repos.d/mongodb-org.repo
+
+log_success "MongoDB Shell installation complete"
+echo "::endgroup::"
+
 log_section "Third-Party Software Installation Complete"
 log_success "All third-party applications installed successfully"
