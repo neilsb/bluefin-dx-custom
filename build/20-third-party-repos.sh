@@ -143,5 +143,37 @@ rm -f /etc/yum.repos.d/mongodb-org.repo
 log_success "MongoDB Shell installation complete"
 echo "::endgroup::"
 
+###############################################################################
+# Vivaldi Browser (Stable)
+###############################################################################
+
+echo "::group:: Install Vivaldi Browser"
+log_step "Installing Vivaldi Browser (stable) from official repository..."
+
+log_info "Adding Vivaldi repository..."
+cat > /etc/yum.repos.d/vivaldi.repo << 'EOF'
+[vivaldi]
+name=vivaldi
+baseurl=https://repo.vivaldi.com/archive/rpm/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.vivaldi.com/archive/linux_signing_key.pub
+EOF
+
+log_info "Importing Vivaldi GPG key..."
+rpm --import https://repo.vivaldi.com/archive/linux_signing_key.pub
+
+log_info "Installing vivaldi-stable package..."
+dnf5 install -y vivaldi-stable
+
+# Verify installation
+verify_package "vivaldi-stable"
+
+log_info "Cleaning up Vivaldi repository file..."
+rm -f /etc/yum.repos.d/vivaldi.repo
+
+log_success "Vivaldi Browser installation complete"
+echo "::endgroup::"
+
 log_section "Third-Party Software Installation Complete"
 log_success "All third-party applications installed successfully"

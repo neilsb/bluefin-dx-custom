@@ -29,6 +29,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 - **Shell Environment**: Noctalia Shell (modern shell environment from Fyra Labs)
 - **Terminals**: Ghostty (modern, fast terminal emulator)
 - **Development Tools**: VSCode Insiders
+- **Web Browser**: Vivaldi (stable channel from the official repository)
 - **System Tools**: earlyoom (OOM prevention), ffmpegthumbnailer (video thumbnails), mongodb-mongosh-shared-openssl3 (MongoDB Shell)
 - **Codecs**: Full multimedia codecs via negativo17/fedora-multimedia (base image), libvdpau-va-gl
 
@@ -58,7 +59,7 @@ Here are the changes from Bluefin DX. This image is based on Bluefin and include
 - Multiple desktop sessions available in GDM (GNOME, COSMIC, and Hyprland).
 - Custom ujust commands available: install-nvm, install-sdkman, install-dev-managers.
 
-*Last updated: 2026-03-18*
+*Last updated: 2026-03-27*
 
 ## What is this image
 
@@ -73,6 +74,7 @@ Based on **Bluefin DX**, this image adds:
 - **VSCode Insiders** installed via RPM
 - **Ghostty Terminal** installed via COPR (modern terminal emulator)
 - **Noctalia Shell** installed via Terra repository (modern shell environment)
+- **Vivaldi Browser** stable channel installed via official repository
 - **Multi-desktop support**: Choose GNOME, COSMIC, or Hyprland at login (GDM)
 - All Bluefin DX features (containers, DevPods, CLI tools, etc.)
 
